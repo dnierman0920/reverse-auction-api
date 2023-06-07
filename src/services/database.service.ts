@@ -3,8 +3,7 @@ import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 
 // Global Variables
-export const collections: { reverseAuctionCollection?: mongoDB.Collection } =
-  {};
+export const collections: { procurers?: mongoDB.Collection } = {};
 
 // Initialize Connection
 
@@ -22,12 +21,11 @@ export async function connectToDatabase() {
 
   const db: mongoDB.Db = client.db(process.env.DB_NAME);
 
-  const reverseAuctionCollection: mongoDB.Collection =
-    db.collection(collectionName);
+  const procurers: mongoDB.Collection = db.collection(collectionName);
 
-  collections.reverseAuctionCollection = reverseAuctionCollection;
+  collections.procurers = procurers;
 
   console.log(
-    `Successfully connected to database: ${db.databaseName} and collection: ${reverseAuctionCollection.collectionName}`
+    `Successfully connected to database: ${db.databaseName} and collection: ${procurers.collectionName}`
   );
 }
