@@ -1,6 +1,4 @@
-import express from "express";
 import { connectToDatabase } from "./services/database.service";
-import * as dotenv from "dotenv";
 import createServer from "./server";
 
 var app = createServer();

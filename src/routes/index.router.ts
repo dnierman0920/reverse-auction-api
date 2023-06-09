@@ -1,8 +1,8 @@
 import { Router } from "express";
-import procurerRouter from "./procurer.router";
+import buyerRouter from "./buyer.router";
 
 const routes = Router();
 
-routes.use("/procurer", procurerRouter);
+routes.use("/buyer", buyerRouter);
 
 export default Router;

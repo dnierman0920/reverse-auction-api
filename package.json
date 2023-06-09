@@ -1,7 +1,7 @@
 {
   "name": "reverse-auction-api",
   "version": "1.0.0",
-  "description": "An Api that tracks projects, bids, vendors and procurers",
+  "description": "An Api that tracks projects, bids, vendors and buyers",
   "main": "./src/index.ts",
   "scripts": {
     "dev": "NODE_ENV=dev nodemon -r tsconfig-paths/register src/index.ts",
