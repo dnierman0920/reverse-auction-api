@@ -1,8 +1,14 @@
 # Reverse Auction API
 
-- ## **Summary:** An Api that tracks projects, bids, vendors and buyers.
+## **Summary:**
 
-- ## **What is a reverse auction?** - multiple sellers that compete for the business of a single buyer.
+- An Api that tracks projects, bids, vendors and buyers.
+
+&nbsp;
+
+## **What is a reverse auction?**
+
+- Multiple sellers that compete for the business of a single buyer.
 
 &nbsp;
 
