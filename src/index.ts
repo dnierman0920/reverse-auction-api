@@ -1,22 +1,21 @@
 import express from "express";
 import { connectToDatabase } from "./services/database.service";
 import * as dotenv from "dotenv";
-import { procurerRouter } from "./routes/procurer.router";
+import createServer from "./server";
 
-var app = express();
+var app = createServer();
 
-app.use("/procurer", procurerRouter);
+function startServer() {
+  const app = createServer();
+  const port: number = parseInt(<string>process.env.PORT, 10) || 3000;
+  app.listen(port, () => {
+    console.log(`Server started at http://localhost:${port}`);
+  });
+}
 
 connectToDatabase()
   .then(() => {
-    dotenv.config();
-    const port: string = process.env.PORT ?? "3000";
-    app.listen(port, () => {
-      console.log(`Server started at http://localhost:${port}`);
-    });
-    app.get("/", function (req, res) {
-      res.send("Hello World!");
-    });
+    startServer();
   })
   .catch((error: Error) => {
     console.error("Database connection failed", error);

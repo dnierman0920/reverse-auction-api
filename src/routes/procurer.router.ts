@@ -1,11 +1,11 @@
 // External
-import express, { Request, Response } from "express";
+import express, { Request, Response, Router } from "express";
 import { collections } from "../services/database.service";
 import Procurer from "../models/procurer";
 import { ObjectId } from "mongodb";
 
 // Global Config
-export const procurerRouter = express.Router();
+const procurerRouter = Router();
 procurerRouter.use(express.json());
 
 // GET
@@ -100,3 +100,5 @@ procurerRouter.delete("/:id", async (req: Request, res: Response) => {
     res.status(500).send(message);
   }
 });
+
+export default procurerRouter;
