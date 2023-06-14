@@ -5,11 +5,11 @@ import Buyer from "../models/buyer";
 import { ObjectId } from "mongodb";
 
 // Global Config
-const buyerRouter = Router();
-buyerRouter.use(express.json());
+const router = Router();
+router.use(express.json());
 
 // GET
-buyerRouter.get("/", async (_req: Request, res: Response) => {
+router.get("/", async (_req: Request, res: Response) => {
   try {
     const collectionBuyers = await collections.buyers;
     if (collectionBuyers) {
@@ -24,7 +24,7 @@ buyerRouter.get("/", async (_req: Request, res: Response) => {
 });
 
 // POST
-buyerRouter.post("/", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
   try {
     const newBuyer = req.body as Buyer;
     const collectionBuyers = await collections.buyers;
@@ -47,7 +47,7 @@ buyerRouter.post("/", async (req: Request, res: Response) => {
 });
 
 // PUT
-buyerRouter.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", async (req: Request, res: Response) => {
   const id = req?.params?.id;
 
   try {
@@ -75,7 +75,7 @@ buyerRouter.put("/:id", async (req: Request, res: Response) => {
 
 // DELETE
 
-buyerRouter.delete("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request, res: Response) => {
   const id = req?.params?.id;
 
   try {
@@ -99,4 +99,4 @@ buyerRouter.delete("/:id", async (req: Request, res: Response) => {
   }
 });
 
-export default buyerRouter;
+export default router;
