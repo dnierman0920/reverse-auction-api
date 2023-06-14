@@ -2,12 +2,12 @@
   "name": "reverse-auction-api",
   "version": "1.0.0",
   "description": "An Api that tracks projects, bids, vendors and buyers",
-  "main": "./src/index.ts",
+  "main": "./src/app.ts",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon -r tsconfig-paths/register src/index.ts",
+    "dev": "NODE_ENV=dev nodemon -r tsconfig-paths/register src/app.ts",
     "start:dev": "npx nodemon",
     "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/index.js",
+    "start": "npm run build && node build/app.js",
     "test": "NODE_ENV=test mocha --check-leaks -r tsconfig-paths/register -r ts-node/register \"test/**/*.test.ts\""
   },
   "keywords": [
