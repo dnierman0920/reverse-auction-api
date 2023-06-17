@@ -1,13 +1,22 @@
 import express, { Application } from "express";
 import routes from "./routes/index.router";
 
-export default function createServer() {
-  const app: Application = express();
-  app.get("/", function (req, res) {
-    res.send("Hello World!");
-  });
+export class ServerDependency {
+  private _port: number;
 
-  app.use(routes);
+  constructor(port: number) {
+    this._port = port;
+  }
 
-  return app;
+  app: Application = express();
+
+  public startServer() {
+    this.app.use(routes);
+    this.app.get("/", (req, res) => {
+      res.send("Hello World!");
+    });
+    return this.app.listen(this._port, () => {
+      console.log(`Server started at http://localhost:${this._port}`);
+    });
+  }
 }

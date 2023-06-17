@@ -1,19 +1,20 @@
-import { connectToDatabase } from "./services/database.service";
-import createServer from "./server";
+import { DatabaseDependency } from "./services/database/databaseDependency";
+import { ServerDependency } from "./server";
 
-var app = createServer();
+require("dotenv").config();
+const port: number = parseInt(<string>process.env.PORT, 10) || 3000;
+const connectionString: string =
+  process.env.DB_CONN_STRING ?? "Define Connection String in .ENV!";
+const dbName: string =
+  process.env.DB_NAME ?? "Define Connection String in .ENV!";
 
-function startServer() {
-  const app = createServer();
-  const port: number = parseInt(<string>process.env.PORT, 10) || 3000;
-  app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
-  });
-}
+export const s = new ServerDependency(port);
 
-connectToDatabase()
+export const db = new DatabaseDependency(connectionString, dbName);
+
+db.connectToDatabase()
   .then(() => {
-    startServer();
+    s.startServer();
   })
   .catch((error: Error) => {
     console.error("Database connection failed", error);
