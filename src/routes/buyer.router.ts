@@ -1,8 +1,8 @@
 // External
 import express, { Request, Response, Router } from "express";
-import { collections } from "../services/database.service";
 import Buyer from "../models/buyer";
 import { ObjectId } from "mongodb";
+import { db } from "../app";
 
 // Global Config
 const router = Router();
@@ -11,10 +11,10 @@ router.use(express.json());
 // GET
 router.get("/", async (_req: Request, res: Response) => {
   try {
-    const collectionBuyers = await collections.buyers;
+    const collectionBuyers = db.collections.buyers;
     if (collectionBuyers) {
       const buyers = (await collectionBuyers.find({}).toArray()) as Buyer[];
-      res.status(200).send(buyers);
+      res.send(buyers);
     }
   } catch (error) {
     let message = "Unknown Error";
@@ -27,14 +27,16 @@ router.get("/", async (_req: Request, res: Response) => {
 router.post("/", async (req: Request, res: Response) => {
   try {
     const newBuyer = req.body as Buyer;
-    const collectionBuyers = await collections.buyers;
+    const collectionBuyers = await db.collections.buyers;
     if (collectionBuyers) {
       const result = await collectionBuyers.insertOne(newBuyer);
       result
         ? res
             .status(201)
             .send(
-              `Successfully created a new buyer with id ${result.insertedId}`
+              `Successfully created a new buyer with the name ${JSON.stringify(
+                newBuyer.name
+              )}`
             )
         : res.status(500).send("Failed to create a new buyer");
     }
@@ -53,7 +55,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   try {
     const updatedBuyer: Buyer = req.body as Buyer;
     const query = { _id: new ObjectId(id) };
-    const collectionBuyers = await collections.buyers;
+    const collectionBuyers = await db.collections.buyers;
     if (collectionBuyers) {
       const result = await collectionBuyers.updateOne(query, {
         $set: updatedBuyer,
@@ -80,7 +82,7 @@ router.delete("/:id", async (req: Request, res: Response) => {
 
   try {
     const query = { _id: new ObjectId(id) };
-    const collectionBuyers = await collections.buyers;
+    const collectionBuyers = await db.collections.buyers;
     if (collectionBuyers) {
       const result = await collectionBuyers.deleteOne(query);
       if (result && result.deletedCount) {
