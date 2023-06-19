@@ -1,5 +1,5 @@
 import Buyer from "models/buyer";
-import { collections } from "../services/database/databaseDependency";
+import { collections } from "../services/databaseDependency";
 import { ObjectId } from "mongodb";
 
 export class BuyerController {

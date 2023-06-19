@@ -15,8 +15,13 @@ export class DatabaseDependency {
     collections.buyers = this._db.collection("buyers");
   }
 
-  public async connectToDatabase() {
-    await this._client.connect();
+  public get db() {
+    return this._db;
+  }
+
+  public async connectToDatabase(): Promise<mongoDB.MongoClient> {
+    const connection = await this._client.connect();
     console.log(`Successfully connected to database: ${this._db.databaseName}`);
+    return connection;
   }
 }

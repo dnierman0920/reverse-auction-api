@@ -1,5 +1,3 @@
-import * as mongoDB from "mongodb";
-
 import { exec } from "child_process";
 
 export async function runMongoDBDockerImage(): Promise<string> {

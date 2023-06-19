@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import routes from "./routes/index.router";
+import routes from "../routes/index.router";
 import { Server } from "http";
 
 export class ServerDependency {

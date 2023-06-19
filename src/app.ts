@@ -1,5 +1,5 @@
-import { DatabaseDependency } from "./services/database/databaseDependency";
-import { ServerDependency } from "./server";
+import { DatabaseDependency } from "./services/databaseDependency";
+import { ServerDependency } from "./services/serverDependency";
 
 require("dotenv").config();
 const port: number = parseInt(<string>process.env.PORT, 10) || 3000;
@@ -8,13 +8,14 @@ const connectionString: string =
 const dbName: string =
   process.env.DB_NAME ?? "Define Connection String in .ENV!";
 
-export const s = new ServerDependency(port);
+export let s: ServerDependency;
 
-export const db = new DatabaseDependency(connectionString, dbName);
+const db = new DatabaseDependency(connectionString, dbName);
 
-db.connectToDatabase()
+export const connection = db
+  .connectToDatabase()
   .then(() => {
-    s.startServer();
+    s = new ServerDependency(port);
   })
   .catch((error: Error) => {
     console.error("Database connection failed", error);
