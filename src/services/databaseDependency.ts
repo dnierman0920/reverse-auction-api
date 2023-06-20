@@ -19,9 +19,29 @@ export class DatabaseDependency {
     return this._db;
   }
 
+  public get client() {
+    return this._client;
+  }
+
   public async connectToDatabase(): Promise<mongoDB.MongoClient> {
     const connection = await this._client.connect();
     console.log(`Successfully connected to database: ${this._db.databaseName}`);
     return connection;
+  }
+
+  public async isConnected() {
+    if (!this._db) {
+      return false;
+    }
+
+    let res;
+
+    try {
+      res = await this._db.admin().ping();
+    } catch (err) {
+      return false;
+    }
+
+    return Object.prototype.hasOwnProperty.call(res, "ok") && res.ok === 1;
   }
 }
