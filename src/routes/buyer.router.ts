@@ -1,7 +1,7 @@
 // External
 import express, { Request, Response, Router } from "express";
-import Buyer from "../models/buyer";
 import { BuyerController } from "../controllers/buyer.controller";
+import { Buyer } from "models/buyer";
 
 // Global Config
 const router = Router();
@@ -44,7 +44,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   const id = req?.params?.id;
 
   try {
-    const updatedBuyer: Buyer = req.body as Buyer;
+    const updatedBuyer = req.body as Buyer;
     (await controller.updateBuyer(updatedBuyer, id))
       ? res.status(200).send(`Successfully updated buyer with id ${id}`)
       : res.status(304).send(`Buyer with id: ${id} not updated`);
