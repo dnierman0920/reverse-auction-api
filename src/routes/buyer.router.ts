@@ -41,6 +41,11 @@ router.post("/", async (req: Request, res: Response) => {
 
 // PUT
 router.put("/:id", async (req: Request, res: Response) => {
+  if (!req.body.name || req.body.name.length === 0) {
+    return res
+      .status(400)
+      .send("Failed to update buyer. Buyer obj w/ name is required.");
+  }
   const id = req?.params?.id;
 
   try {

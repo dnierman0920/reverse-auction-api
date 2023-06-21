@@ -1,5 +1,4 @@
 import { DatabaseDependency } from "../../services/databaseDependency";
-import { MongoClient } from "mongodb";
 import { ServerDependency } from "../../services/serverDependency";
 import request from "supertest";
 import { BuyerController } from "../../controllers/buyer.controller";
@@ -95,5 +94,31 @@ describe("buyerRoutes-test", function () {
     expect(body).toBe(`Successfully updated buyer with id ${id}`);
     const updatedBuyers = await buyerController.getBuyers();
     expect(updatedBuyers[0].name).toBe(buyerRequest2.name);
+  });
+  it("update buyer (w/o req body)returns 400 and error message", async function () {
+    const b = await buyerController.createBuyer(buyerRequest);
+    const id = b?.insertedId.toJSON();
+    const res = await request(server.app).put(`/buyer/${id}`).send();
+    expect(res.statusCode).toEqual(400);
+    const body = res.text;
+    expect(body).toBe(`Failed to update buyer. Buyer obj w/ name is required.`);
+  });
+  it("create buyer (w/o buyer in req body obj)returns 400 and error message", async function () {
+    const b = await buyerController.createBuyer(buyerRequest);
+    const id = b?.insertedId.toJSON();
+    const res = await request(server.app).put(`/buyer/${id}`).send({});
+    expect(res.statusCode).toEqual(400);
+    const body = res.text;
+    expect(body).toBe(`Failed to update buyer. Buyer obj w/ name is required.`);
+  });
+  it("create buyer (w/ empty string for name in req body)returns 400 and error message", async function () {
+    const b = await buyerController.createBuyer(buyerRequest);
+    const id = b?.insertedId.toJSON();
+    const res = await request(server.app)
+      .put(`/buyer/${id}`)
+      .send({ name: "" });
+    expect(res.statusCode).toEqual(400);
+    const body = res.text;
+    expect(body).toBe(`Failed to update buyer. Buyer obj w/ name is required.`);
   });
 });
