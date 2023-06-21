@@ -41,9 +41,7 @@ router.put("/:id", async (req: Request, res: Response) => {
   try {
     const updatedBuyer: Buyer = req.body as Buyer;
     (await controller.updateBuyer(updatedBuyer, id))
-      ? res
-          .status(200)
-          .send(`Successfully updated buyer with id ${updatedBuyer}`)
+      ? res.status(200).send(`Successfully updated buyer with id ${id}`)
       : res.status(304).send(`Buyer with id: ${id} not updated`);
   } catch (error) {
     console.error(error);
