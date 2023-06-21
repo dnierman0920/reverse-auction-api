@@ -39,6 +39,14 @@ describe("buyerRoutes-test", function () {
       `Successfully created a new buyer with the name ${buyer.name}`
     );
   });
+  it("create buyer returns 500 and error message", async function () {
+    const res = await request(server.app).post("/buyer").send();
+    expect(res.statusCode).toEqual(500);
+    const body = res.text;
+    expect(body).toBe(
+      `Failed to create a new buyer. Please include Buyer obj in req body.`
+    );
+  });
   it("get buyer returns 200 and a list of buyers", async function () {
     await buyerController.createBuyer(buyer);
     const res = await request(server.app).get("/buyer");
