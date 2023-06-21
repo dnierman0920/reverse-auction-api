@@ -31,7 +31,7 @@ describe("buyerRoutes-test", function () {
     await dbd.db.dropDatabase();
   });
 
-  it("create buyer", async function () {
+  it("create buyer returns 201 and success message", async function () {
     const res = await request(server.app).post("/buyer").send(buyer);
     expect(res.statusCode).toEqual(201);
     const body = res.text.replace(/[\\"]/g, "");
@@ -39,11 +39,19 @@ describe("buyerRoutes-test", function () {
       `Successfully created a new buyer with the name ${buyer.name}`
     );
   });
-  it("get buyer", async function () {
+  it("get buyer returns 200 and a list of buyers", async function () {
     await buyerController.createBuyer(buyer);
     const res = await request(server.app).get("/buyer");
     expect(res.statusCode).toEqual(200);
     const name = res.body[0].name;
     expect(buyer.name).toBe(name);
+  });
+  it("delete buyer returns 202 and success message", async function () {
+    const b = await buyerController.createBuyer(buyer);
+    const id = b?.insertedId.toJSON();
+    const res = await request(server.app).delete(`/buyer/${id}`);
+    expect(res.statusCode).toEqual(202);
+    const body = res.text.replace(/[\\"]/g, "");
+    expect(body).toBe(`Successfully removed buyer with id ${id}`);
   });
 });
