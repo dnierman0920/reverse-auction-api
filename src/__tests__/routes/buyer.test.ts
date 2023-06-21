@@ -54,4 +54,12 @@ describe("buyerRoutes-test", function () {
     const body = res.text.replace(/[\\"]/g, "");
     expect(body).toBe(`Successfully removed buyer with id ${id}`);
   });
+  it("update buyer returns 200 and success message", async function () {
+    const b = await buyerController.createBuyer(buyer);
+    const id = b?.insertedId.toJSON();
+    const res = await request(server.app).put(`/buyer/${id}`);
+    expect(res.statusCode).toEqual(200);
+    const body = res.text.replace(/[\\"]/g, "");
+    expect(body).toBe(`Successfully updated buyer with id ${id}`);
+  });
 });
