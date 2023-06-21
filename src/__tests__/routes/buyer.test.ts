@@ -39,12 +39,12 @@ describe("buyerRoutes-test", function () {
       `Successfully created a new buyer with the name ${buyer.name}`
     );
   });
-  it("create buyer returns 500 and error message", async function () {
+  it("create buyer (w/o buyer in req body)returns 400 and error message", async function () {
     const res = await request(server.app).post("/buyer").send();
-    expect(res.statusCode).toEqual(500);
+    expect(res.statusCode).toEqual(400);
     const body = res.text;
     expect(body).toBe(
-      `Failed to create a new buyer. Please include Buyer obj in req body.`
+      `Failed to create a new buyer. Buyer obj w/ name is required.`
     );
   });
   it("get buyer returns 200 and a list of buyers", async function () {

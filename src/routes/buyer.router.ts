@@ -22,6 +22,11 @@ router.get("/", async (_req: Request, res: Response) => {
 
 // POST
 router.post("/", async (req: Request, res: Response) => {
+  if (!req.body.name || req.body.name.length === 0) {
+    return res
+      .status(400)
+      .send("Failed to create a new buyer. Buyer obj w/ name is required.");
+  }
   const newBuyer = req.body as Buyer;
   (await controller.createBuyer(newBuyer))
     ? res
