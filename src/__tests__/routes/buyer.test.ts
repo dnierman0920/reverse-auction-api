@@ -2,7 +2,7 @@ import { DatabaseDependency } from "../../services/databaseDependency";
 import { ServerDependency } from "../../services/serverDependency";
 import request from "supertest";
 import { BuyerController } from "../../controllers/buyer.controller";
-import { Buyer } from "models/buyer";
+import { Buyer } from "../../models/buyer";
 
 describe("buyerRoutes-test", function () {
   let dbd: DatabaseDependency;

@@ -1,7 +1,7 @@
 // External
 import express, { Request, Response, Router } from "express";
 import { BuyerController } from "../controllers/buyer.controller";
-import { Buyer } from "models/buyer";
+import { Buyer } from "../models/buyer";
 
 // Global Config
 const router = Router();
