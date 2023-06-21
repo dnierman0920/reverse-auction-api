@@ -46,6 +46,18 @@ describe("buyerRoutes-test", function () {
     expect(body).toBe(
       `Failed to create a new buyer. Buyer obj w/ name is required.`
     );
+    const res2 = await request(server.app).post("/buyer").send({});
+    expect(res.statusCode).toEqual(400);
+    const body2 = res.text;
+    expect(body2).toBe(
+      `Failed to create a new buyer. Buyer obj w/ name is required.`
+    );
+    const res3 = await request(server.app).post("/buyer").send({ name: "" });
+    expect(res.statusCode).toEqual(400);
+    const body3 = res.text;
+    expect(body3).toBe(
+      `Failed to create a new buyer. Buyer obj w/ name is required.`
+    );
   });
   it("get buyer returns 200 and a list of buyers", async function () {
     await buyerController.createBuyer(buyer);
