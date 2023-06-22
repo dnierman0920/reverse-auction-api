@@ -6,22 +6,27 @@ services:
     restart: always
     ports:
       - 2717:27017
-    volumes:
-      - mongo_db:/data/db
+    # volumes:
+    #   - mongo_db:/data/db
 
-  # node api
-  api:
+  # dev node api
+  devapi:
     build: .
     ports:
       - 4000:3000
     environment:
       PORT: 3000
-      DB_CONN_STRING: mongodb://mongo_db:27017
-      DB_NAME: reverseAuctionDB
-      COLLECTION_NAME: reverseAuctionCollection
-      NAME: reverseAuctionApi
+      DB_CONNECTION_STRING: mongodb://mongo_db:27017
+      NODE_ENV: development
     depends_on:
       - mongo_db
 
-volumes:
-  mongo_db: {}
+    # node api
+  prodapi:
+    build: .
+    ports:
+      - 4000:3000
+    environment:
+      PORT: 3000
+      DB_CONNECTION_STRING: mongodb+srv://open:password1993@reverse-auction.glejqgq.mongodb.net/
+      NODE_ENV: production

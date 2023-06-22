@@ -1,12 +1,18 @@
 import { DatabaseDependency } from "./services/databaseDependency";
 import { ServerDependency } from "./services/serverDependency";
 
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config({
+  path:
+    process.env.NODE_ENV === "production"
+      ? "production.env"
+      : "development.env",
+});
+
 const port: number = parseInt(<string>process.env.PORT, 10) || 3000;
 const connectionString: string =
-  process.env.DB_CONN_STRING ?? "Define Connection String in .ENV!";
-const dbName: string =
-  process.env.DB_NAME ?? "Define Connection String in .ENV!";
+  process.env.DB_CONNECTION_STRING ?? "Define Connection String in .ENV!";
+const dbName: string = "reverseAuctionDB";
 
 export let s: ServerDependency;
 

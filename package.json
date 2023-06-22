@@ -4,9 +4,9 @@
   "description": "An Api that tracks projects, bids, vendors and buyers",
   "main": "./src/app.ts",
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon -r tsconfig-paths/register src/app.ts",
+    "dev": "NODE_ENV=development nodemon -r tsconfig-paths/register src/app.ts",
     "build": "rimraf ./build && tsc",
-    "start": "npm run build && node build/app.js",
+    "start": "NODE_ENV=production node build/app.js",
     "test": "jest"
   },
   "keywords": [
