@@ -7,8 +7,10 @@ export const collections: { buyers?: mongoDB.Collection } = {}; // add future co
 export class DatabaseDependency {
   private _client: mongoDB.MongoClient;
   private _db: mongoDB.Db;
+  private _connectionString: string;
 
   constructor(connectionString: string, dbName: string) {
+    this._connectionString = connectionString;
     this._client = new mongoDB.MongoClient(connectionString);
     this._db = this._client.db(dbName);
     // add future collections here!
@@ -24,6 +26,7 @@ export class DatabaseDependency {
   }
 
   public async connectToDatabase(): Promise<mongoDB.MongoClient> {
+    console.log("connecting using connection string: ", this._connectionString);
     const connection = await this._client.connect();
     console.log(`Successfully connected to database: ${this._db.databaseName}`);
     return connection;
